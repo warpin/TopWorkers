@@ -1,95 +1,119 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns="http://www.w3.org/1999/html" xmlns:table-layout="http://www.w3.org/1999/xhtml">
+<html lang="ru" xmlns:table-layout="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
-    <meta charset="cp-1251">
-    <title>Управление баллами</title>
+
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="-1">
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>РЈРїСЂР°РІР»РµРЅРёРµ Р±Р°Р»Р»Р°РјРё</title>
 </head>
 <body>
 <div class="login-form">
-    <h1 align="left"><a href="http://top.prettl.ru/manage_workers.php" class="h1link">Администрирование работников</a></h1>
-    <h1 align="left"><a href="http://top.prettl.ru/manage_score.php" class="h1link">Управление баллами работников</a></h1>
+    <h1 align="left"><a href="http://top.prettl.ru/manage_workers.php" class="h1link">РђРґРјРёРЅРёСЃС‚СЂРёСЂРѕРІР°РЅРёРµ СЂР°Р±РѕС‚РЅРёРєРѕРІ</a></h1>
+    <h1 align="left"><a href="http://top.prettl.ru/manage_score.php" class="h1link">РЈРїСЂР°РІР»РµРЅРёРµ Р±Р°Р»Р»Р°РјРё СЂР°Р±РѕС‚РЅРёРєРѕРІ</a></h1>
 
     <?php
-        //if(!isset($_GET['date']) || empty($_GET['date']))$date=date("Y-m-d");
+
+    //if(!isset($_GET['date']) || empty($_GET['date']))$date=date("Y-m-d");
         if(isset($_GET['date']))$date=$_GET['date'];
+        else $date=null;
         //else $date=date("Y-m-d");
         //else $date=$_GET['date'];
     ?>
 
     <form method="GET">
-        <label>Выберите дату
+        <label>Р’С‹Р±РµСЂРёС‚Рµ РґР°С‚Сѓ
             <input type="date" name="date" required value="<?php echo $date ?>">
         </label>
 
         <button name="pick_date" value="true" class="btn">
-            Отобразить баллы
+            РћС‚РѕР±СЂР°Р·РёС‚СЊ Р±Р°Р»Р»С‹
         </button>
         <p></p>
-
-
-    <table align="center" >
-        <tr>
-            <td class="table_manage" >№</td>
-            <td class="table_manage" >ФИО работника</td>
-            <td class="table_manage" >Баллы</td>
-        </tr>
 
 
     <?php
 
     require './config/db_connect.php';
-    $conn = new DB_CONNECT();
-    $db = new DB_CONNECT();
-
 
     $count=1;
     if(!empty($_GET["date"])){
         $date=$_GET["date"];
         //echo $date;
         //echo '<form method="GET">';
-        $result = mysql_query("SELECT * FROM workers");
-        if($result){
-            while ($row = mysql_fetch_array($result)) {
+        $sql = "SELECT * FROM workers";
+        if ($res = $pdo->query($sql)) {
+            while ($row = $res->fetch()){
                 $user_id=$row['id'];
-                $result_select=mysql_query("SELECT * FROM main WHERE user_id='$user_id' and date='$date'");
-                if(mysql_num_rows($result_select) == 0)$result_insert = mysql_query("INSERT INTO main(user_id,date,score) VALUES ('$user_id','$date','0')");
+                $sql_select="SELECT * FROM main WHERE user_id='$user_id' and date='$date'";
+                if ($res_select = $pdo->query($sql_select)) {
+                    if ($res_select->fetchColumn() == 0) {
+                        $sql_insert = "INSERT INTO main(user_id,date,score) VALUES ('$user_id','$date','0')";
+                        $res_insert = $pdo->exec($sql_insert);
+                    }
+                }
             }
         }
 
-        $result = mysql_query("SELECT *
+        $sql = "SELECT *
         FROM main
         LEFT OUTER JOIN workers ON main.user_id=workers.id
         WHERE date='$date'
-        ORDER BY workers.fio ASC");
+        ORDER BY workers.fio ASC";
+
+        if ($res = $pdo->query($sql)) {
+            if($res->fetchColumn() > 0){
+                $new_table=true;
+                echo '<table align="center" border="0">';
+                $count=1;
+                while ($row = $res->fetch()){
+
+                    if($new_table){
+                        echo '<td >';
+                        echo '<table align="center" class="table_top">';
+                        echo '<tr>';
+                        echo '<td >РњРµСЃС‚Рѕ</td>';
+                        echo '<td>Р¤РРћ Р Р°Р±РѕС‚РЅРёРєР°</td>';
+                        echo '<td>Р‘Р°Р»Р»С‹</td>';
+                        echo '</tr>';
+
+                        $new_table=false;
+                    }
+                    echo '<tr>';
 
 
+                    //$user_ids[$count]=$row["user_id"];
+                    echo '<tr>';
+                    echo('<td><span>'.$count.'</span></td>');
+                    echo('<td><span>'.$row['fio'].'</span></td>');
+                    //echo('<td><span class="table_loc">'.$row["score"].'</span></td>');
+                    echo('<td><span><input name=score'.$row['user_id'].' type="number" min="0" max="100" value="'.$row['score'].'"/></span></td>');
+                    echo '</tr>';
 
-        if (!empty($result) and mysql_num_rows($result) > 0) {
-            // check for empty result
+
+                    if(is_int($count/20)){
+                        echo '</table>';
+                        echo '</td>';
+                        $new_table=true;
+                    }
+                    $count++;
+                }
+                echo '</table>';
+                echo '</table>';
 
 
+                echo '<button name="save" value="true" class="btn" type="submit">';
+                echo 'РЎРѕС…СЂР°РЅРёС‚СЊ';
+                echo '</button>';
+                echo '</form>';
 
-            while ($row = mysql_fetch_array($result)) {
-                //$user_ids[$count]=$row["user_id"];
-                echo '<tr>';
-                echo('<td><span class="table_loc">'.$count.'</span></td>');
-                echo('<td><span class="table_loc">'.$row["fio"].'</span></td>');
-                //echo('<td><span class="table_loc">'.$row["score"].'</span></td>');
-                echo('<td><span class="table_loc"><input name=score'.$row["user_id"].' type="number" min="0" max="100" value="'.$row["score"].'"/></span></td>');
-                echo '</tr>';
-                $count++;
+                echo '<p>Р‘Р°Р»Р»С‹ РЅР° РґР°С‚Сѓ: '.date("d.m.Y", strtotime($date)).' </p>';
             }
 
 
-
-            echo '<button name="save" value="true" class="btn" type="submit">';
-            echo 'Сохранить';
-            echo '</button>';
-            echo '</form>';
-
-            echo '<p>Баллы на дату: '.date("d.m.Y", strtotime($date)).' </p>';
 
 
         } else {
@@ -100,34 +124,35 @@
     if(isset($_GET['save'])){
         if($_GET['save']=="true"){
             $err=false;
-
-            $result = mysql_query("SELECT * FROM workers");
-            if($result){
-                while ($row = mysql_fetch_array($result)) {
-                    //Берем построчно пользователя
+            $sql = "SELECT * FROM workers";
+            if ($res = $pdo->query($sql)) {
+                while ($row = $res->fetch()){
+                    //Р‘РµСЂРµРј РїРѕСЃС‚СЂРѕС‡РЅРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
                     $user_id=$row['id'];
+                    $user_fio=$row['fio'];
                     $score_index="score".$user_id;
                     if(isset($_GET[$score_index])){
                         $score=$_GET[$score_index];
-                        $result_select=mysql_query("SELECT * FROM main WHERE user_id='$user_id' and date='$date'");
+                        $sql_select="SELECT * FROM main WHERE user_id='$user_id' and date='$date'";
                         //echo mysql_num_rows($result_select)." ";
-                        //Если нет строк
-                        if(mysql_num_rows($result_select) == 0){
+                        //Р•СЃР»Рё РЅРµС‚ СЃС‚СЂРѕРє
+                        $res_select = $pdo->query($sql_select);
+                        if($res_select->fetchColumn() == 0){
                             //echo $score.' ';
-                            //То добавляем в главную таблицу
+                            //РўРѕ РґРѕР±Р°РІР»СЏРµРј РІ РіР»Р°РІРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ
                             //$result_insert = mysql_query("INSERT INTO main(user_id,date,score) VALUES ('$user_ids[$i]','$date','$score')");
-                            $result_insert = mysql_query("INSERT INTO main(user_id,date,score) VALUES ('$user_id','$date','$score')");
-                            if(!$result_insert) {
-                                echo '<p>Ошибка сохранения для пользователя с ИД:' . $user_id . '</p>';
+                            $sql_insert = "INSERT INTO main(user_id,date,score) VALUES ('$user_id','$date','$score')";
+                            if (!$res_insert = $pdo->exec($sql_insert)) {
+                                echo '<p>РћС€РёР±РєР° РґРѕР±Р°РІР»РµРЅРёСЏ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ: ' . $user_fio . '</p>';
                                 $err = true;
                             }
-                            //Иначе обновим поле очки
+                            //РРЅР°С‡Рµ РѕР±РЅРѕРІРёРј РїРѕР»Рµ РѕС‡РєРё
                         } else {
                             //echo $score.' ';
                             //$result_update = mysql_query("UPDATE main SET score='$score' where user_id='$user_ids[$i]' and date='$date'");
-                            $result_update = mysql_query("UPDATE main SET score='$score' where user_id='$user_id' and date='$date'");
-                            if(!$result_update){
-                                echo '<p>Ошибка сохранения для пользователя с ИД:'.$user_id.'</p>';
+                            $sql_update = "UPDATE main SET score='$score' where user_id='$user_id' and date='$date'";
+                            if(!$res_update = $pdo->query($sql_update)){
+                                echo '<p>РћС€РёР±РєР° РѕР±РЅРѕРІР»РµРЅРёСЏ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ :'.$user_fio.'</p>';
                                 $err=true;
                             }
 
@@ -142,13 +167,13 @@
             }
         }
         if($_GET['save']=="success"){
-            echo '<p>Успешно сохранено</p>';
+            echo '<p>РЈСЃРїРµС€РЅРѕ СЃРѕС…СЂР°РЅРµРЅРѕ</p>';
         }
         $user_ids=null;
         $count=1;
     }else {
         $count--;
-        echo '<p>Успешно загружено работников: '.$count.'</p>';
+        echo '<p>РЈСЃРїРµС€РЅРѕ Р·Р°РіСЂСѓР¶РµРЅРѕ СЂР°Р±РѕС‚РЅРёРєРѕРІ: '.$count.'</p>';
     }
 
     ?>
@@ -159,4 +184,3 @@
 
 
 </html>
-

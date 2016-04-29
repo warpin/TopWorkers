@@ -1,66 +1,122 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="cp-1251">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Рейтинг вязальщиков ООО "ПРЕТТЛЬ-НК"</title>
-<meta name="description" content="Рейтинг вязальщиков">
-<link rel="stylesheet" href="./css/style.css">
-<META HTTP-EQUIV="refresh" CONTENT="180">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="-1">
+
+    <title>Р РµР№С‚РёРЅРі РІСЏР·Р°Р»СЊС‰РёРєРѕРІ РћРћРћ "РџР Р•РўРўР›Р¬-РќРљ"</title>
+    <meta name="description" content="Р РµР№С‚РёРЅРі РІСЏР·Р°Р»СЊС‰РёРєРѕРІ">
+    <link rel="stylesheet" href="css/style.css">
+    <META HTTP-EQUIV="refresh" CONTENT="420">
 
 </head>
 
 <body>
-<div class="top-form">
-    <h1 class="top_h1" align="center">Рейтинг персонала производства жгутов ООО "ПРЕТТЛЬ-НК"</h1>
-    <?php
+<h1 class="top_h1" align="center">Р РµР№С‚РёРЅРі РїРµСЂСЃРѕРЅР°Р»Р° РїСЂРѕРёР·РІРѕРґСЃС‚РІР° Р¶РіСѓС‚РѕРІ РћРћРћ "РџР Р•РўРўР›Р¬-РќРљ"</h1>
 
-        $month_array=array("Января","Феварля","Марта","Апреля","Мая","Июня","Июля","Августа","Сентября",
-            "Октября","Ноября","Декабря");
+
+    <?php
+        header('Content-Type: text/html; charset=utf-8', true);
+
+        $month_array=array("РЇРЅРІР°СЂСЏ","Р¤РµРІР°СЂР»СЏ","РњР°СЂС‚Р°","РђРїСЂРµР»СЏ","РњР°СЏ","РСЋРЅСЏ","РСЋР»СЏ","РђРІРіСѓСЃС‚Р°","РЎРµРЅС‚СЏР±СЂСЏ",
+            "РћРєС‚СЏР±СЂСЏ","РќРѕСЏР±СЂСЏ","Р”РµРєР°Р±СЂСЏ");
         date_default_timezone_set('UTC');
         $mounth=$month_array[date("n")-1];
         $day=date("j");
         $year=date("Y");
-        echo '<h1 align="center">на '.$day.' '.$mounth.' '.$year.'</h1>';
+        echo '<h1 align="center">РЅР° '.$day.' '.$mounth.' '.$year.'</h1>';
     ?>
 
-
+    <div class="top-form">
         <?php
-        require './config/db_connect.php';
-        $conn = new DB_CONNECT();
-        $db = new DB_CONNECT();
 
-        $result = mysql_query("SELECT SUM(main.score),main.date,workers.fio
+        require './config/db_connect.php';
+
+
+        $sql = "SELECT SUM(main.score),main.date,workers.fio
         FROM main
         LEFT OUTER JOIN workers ON main.user_id=workers.id
         WHERE MONTH(date) = MONTH(CURRENT_DATE())
         GROUP BY workers.fio
-        ORDER BY SUM(main.score) DESC");
+        ORDER BY SUM(main.score) DESC";
 
-        if (!empty($result) and mysql_num_rows($result) > 0) {
-            // check for empty result
-            $class="p_top_gold";
-            $count=1;
-            echo '<marquee behavior="scroll" direction="up" scrollamount="5" height="100%">';
-            while ($row = mysql_fetch_array($result)) {
-                if($count>3)$class="p_top_silver";
-                if($count>10)$class="p_top_bronze";
-                if($count>20)$class="p_top_simple";
-                //echo('<p class="'.$class.'">'.$count.' место: </p>');
-                echo('<p class="'.$class.'">'.$count.' место: '.$row["fio"].' '.$row["SUM(main.score)"].' балл(ов)</p>');
-                $count++;
+
+        $prev_score=0;
+        $prev_count=1;
+        if ($res = $pdo->query($sql)) {
+            /* РћРїСЂРµРґРµР»РёРј РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СЂРѕРє, РїРѕРґС…РѕРґСЏС‰РёС… РїРѕРґ СѓСЃР»РѕРІРёСЏ РІС‹СЂР°Р¶РµРЅРёСЏ SELECT */
+            if ($res->fetchColumn() > 0) {
+
+                $class="p_top_gold";
+                $count=1;
+
+
+
+
+                echo '<table align="center" border="0">';
+
+                $new_table=true;
+
+                while ($row = $res->fetch()){
+
+
+                    if($new_table){
+                        echo '<td class="td_top_outter">';
+                        echo '<table align="center" class="table_top">';
+                        echo '<tr>';
+                        echo '<td class="td_top">РњРµСЃС‚Рѕ</td>';
+                        echo '<td class="td_top">Р¤РРћ Р Р°Р±РѕС‚РЅРёРєР°</td>';
+                        echo '<td class="td_top">Р‘Р°Р»Р»С‹</td>';
+                        echo '</tr>';
+
+                        $new_table=false;
+                    }
+
+                    echo '<tr>';
+
+                    //echo '<td class="'.$class.'">'.$count.'</td>';
+                    if($prev_score==$row["SUM(main.score)"] && $row["SUM(main.score)"]!=0 )echo '<td class="'.$class.'">'.$prev_count.'</td>';
+                    else {
+                        $prev_count=$count;
+                        $prev_score=$row["SUM(main.score)"];
+
+                        if($prev_count>3)$class="p_top_silver";
+                        if($prev_count>10)$class="p_top_bronze";
+                        if($prev_count>20)$class="p_top_simple";
+
+                        echo '<td class="'.$class.'">'.$count.'</td>';
+
+                    }
+
+                    echo '<td class="'.$class.'">'.$row["fio"].'</td>';
+                    echo '<td class="'.$class.'">'.$row["SUM(main.score)"].'</td>';
+                    echo '</tr>';
+
+
+                    if(is_int($count/20)){
+                        echo '</table>';
+                        echo '</td>';
+                        $new_table=true;
+                    }
+
+                    $count++;
+
+
+                }
+                echo '</table>';
+                echo '</table>';
+                //echo '</marquee>';
+            } else {
+                // no data found
+                echo "No data found";
             }
-            echo '</marquee>';
-        } else {
-            // no data found
-            echo "No data found";
         }
         ?>
 
 </div>
-
-
-
 
 </body>
 </html>

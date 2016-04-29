@@ -1,28 +1,13 @@
 <?php
- 
-class DB_CONNECT {
- 
-    function __construct() {
-        $this->connect();
-    }
- 
-    function __destruct() {
-        $this->close();
-    }
- 
-    function connect() {
-        require 'db_config.php';
-        $con = mysql_connect(DB_SERVER, DB_USER, DB_PASSWORD) or die(mysql_error());
-        mysql_query("SET NAMES 'cp1251'");
-        mysql_query("SET CHARACTER SET 'cp1251'");
-        $db = mysql_select_db(DB_DATABASE) or die(mysql_error()) or die(mysql_error());
-        return $con;
-    }
- 
-    function close() {
-        mysql_close();
-    }
- 
-}
- 
+
+    require 'db_config.php';
+
+    $dsn = 'mysql:host='.DB_SERVER.';dbname='.DB_DATABASE.';charset=utf8';
+    $opt = array(
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    );
+    $pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $opt);
+
+
 ?>

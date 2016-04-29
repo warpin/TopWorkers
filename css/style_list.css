@@ -4,45 +4,30 @@
     -webkit-box-sizing:border-box;
 }
 
+h1{
+    color:#AAA173;
 
-/* Popup CSS   */
-.b-popup{
-    top: 0px;
-    left: 0px;
-    width:100%;
-    min-height:100%;
-    background-color: rgba(0,0,0,0.5);
-    overflow:hidden;
-    position:fixed;
+    /*font-size: 48px;*/
 }
-.b-container{
-    width:50%;
-    padding:10px;
+.h1link{
+    color:#AAA173;
+    font-size: xx-large;
+}
+body{
+    background-size:  cover;
+    background-repeat: no-repeat;
+    /*background-image:    url(http://top.prettl.ru/media/bg.jpg);*/
+
+}
+.login-form{
+    width:80%;
+    padding:10px 10px;
     background:rgba(0,0,0,0.7);
     border-radius:10px;
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
     margin:20px auto;
 }
-
-
-h1{
-    color:black;
-    font-size: 2vw;
-}
-
-.h1link{
-    color:#90C3D4;
-    font-size: xx-large;
-}
-body{
-    background-size:  cover;
-    background-repeat: no-repeat;
-    /*background: black;*/
-    /*background-image:    url(http://top.prettl.ru/media/bg.jpg);*/
-
-}
-
 .form-group{
     position: relative;
     margin-bottom:15px;
@@ -73,7 +58,16 @@ body{
     top:17px;
     color:#999;
 }
-
+.log-status.wrong-entry {
+    -webkit-animation: wrong-log 0.3s;
+    -moz-animation: wrong-log 0.3s;
+    -ms-animation: wrong-log 0.3s;
+    animation: wrong-log 0.3s;
+}
+.log-status.wrong-entry .form-control, .wrong-entry .form-control + .fa {
+    border-color: #ed1c24;
+    color: #ed1c24;
+}
 .log-btn{
     background:#0AC986;
     display:inline-block;
@@ -90,6 +84,7 @@ body{
 .log-btn:hover{
     color:green;
 }
+
 .btn{
     background:#0AC986;
     display:inline-block;
@@ -112,7 +107,7 @@ body{
 
 .link{
     text-decoration:none;
-    color:green;
+    color:#9D8E79;
     display:block;
     text-align:right;
     font-size:12px;
@@ -128,50 +123,37 @@ label:hover:before {
     border: 1px solid #4778d9!important;
 }
 
+
 table, td{
-    border: 1px solid white;
+    border: 1px solid whitesmoke;
     border-collapse: collapse;
-    color: white;
-    padding-left: 5px;
-    padding-right: 5px;
+    color:#fff;
+    /*font-size: 5;*/
+    padding-left: 10px;
+    padding-right: 10px;
     padding-bottom: 5px;
     padding-top: 5px;
     table-layout:fixed;
+    word-wrap:break-word;
 
 }
 
-.table_top, .td_top{
-    border: 1px solid white;
-    border-collapse: collapse;
-    color:black;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    table-layout:fixed;
-
+h1{
+    color:floralwhite;
+    font-size: 2vw;
 }
-
-
 .top-form{
+
     width: 95%;
-    height: 80%;
-    padding: 5px;
-    background:rgba(0,0,0,0.3);
+    height: 95vh;
+    padding: 10px;
+    background:rgba(255,255,255,0.3);
     border-radius:10px;
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
     margin:auto;
     overflow:hidden;
-}
-.login-form{
-    width:95%;
-    padding:10px 10px;
-    background:rgba(0,0,0,0.7);
-    border-radius:10px;
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
-    margin:20px auto;
+
 }
 
 .p_top_gold, .p_top_silver, .p_top_bronze, .p_top_simple{
@@ -196,21 +178,48 @@ table, td{
 
 }
 
+.table_top, .td_top{
+    border: 1px solid whitesmoke;
+    border-collapse: collapse;
+    color:#fff;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    table-layout:fixed;
 
+}
 .td_top_outter{
     border: none;
     border-collapse: collapse;
-    color:white;
 }
 
 h2{
-    color:black;
+    color:#fff;
 }
 p{
-    color:white;
+    color:#fff;
 }
 label{
-    color:white;
+    color:#fff;
 }
 
-
+/* Popup CSS   */
+.b-popup{
+    top: 0px;
+    left: 0px;
+    width:100%;
+    min-height:100%;
+    background-color: rgba(0,0,0,0.5);
+    overflow:hidden;
+    position:fixed;
+}
+.b-container{
+    width:50%;
+    padding:10px;
+    background:rgba(0,0,0,0.7);
+    border-radius:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    margin:20px auto;
+}
