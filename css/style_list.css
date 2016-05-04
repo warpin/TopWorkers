@@ -16,7 +16,7 @@ h1{
 body{
     background-size:  cover;
     background-repeat: no-repeat;
-    /*background-image:    url(http://top.prettl.ru/media/bg.jpg);*/
+    background-image:    url(http://top.prettl.ru/media/bg.jpg);
 
 }
 .login-form{
@@ -162,7 +162,7 @@ h1{
     border-radius: 5px;
     color: black;
     /*font-size: 48px;*/
-    font-size: 1vw;
+    font-size: 4vw;
 }
 .p_top_gold{
     background: greenyellow;

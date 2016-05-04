@@ -11,10 +11,10 @@
     <title>Администрирование работников</title>
 </head>
 <body>
-<div class="login-form">
-    <h1 align="left"><a href="http://top.prettl.ru/manage_workers.php" class="h1link">Администрирование работников</a></h1>
-    <h1 align="left"><a href="http://top.prettl.ru/manage_score.php" class="h1link">Управление баллами работников</a></h1>
 
+    <h1 align="center"><a href="http://top.prettl.ru/manage_workers.php" class="h1link">Администрирование работников</a></h1>
+    <h1 align="center"><a href="http://top.prettl.ru/manage_score.php" class="h1link">Управление баллами работников</a></h1>
+    <div class="login-form">
     <form name=form_for_btn method="GET">
         <button name="add_worker" value="true" class="btn" onclick="PopUpShow()">
             Добавить работника
@@ -36,7 +36,8 @@
             echo '<table align="center" border="0">';
             // check for empty result
             $count=1;
-            while ($row = $res->fetch()){
+            foreach($pdo->query($sql) as $row){
+            //while ($row = $res->fetch()){
 
                 if($new_table){
                     echo '<td >';

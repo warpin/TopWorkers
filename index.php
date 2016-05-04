@@ -53,30 +53,26 @@
                 $class="p_top_gold";
                 $count=1;
 
-
-
-
                 echo '<table align="center" border="0">';
 
                 $new_table=true;
 
-                while ($row = $res->fetch()){
-
+                foreach($pdo->query($sql) as $row){
+                //while ($row = $res->fetchAll(PDO::FETCH_ASSOC)){
 
                     if($new_table){
-                        echo '<td class="td_top_outter">';
-                        echo '<table align="center" class="table_top">';
+                        echo '<td>';
+                        echo '<table align="center">';
                         echo '<tr>';
-                        echo '<td class="td_top">Место</td>';
-                        echo '<td class="td_top">ФИО Работника</td>';
-                        echo '<td class="td_top">Баллы</td>';
+                        echo '<td>Место</td>';
+                        echo '<td>ФИО Работника</td>';
+                        echo '<td>Баллы</td>';
                         echo '</tr>';
 
                         $new_table=false;
                     }
 
                     echo '<tr>';
-
                     //echo '<td class="'.$class.'">'.$count.'</td>';
                     if($prev_score==$row["SUM(main.score)"] && $row["SUM(main.score)"]!=0 )echo '<td class="'.$class.'">'.$prev_count.'</td>';
                     else {
@@ -111,7 +107,7 @@
                 //echo '</marquee>';
             } else {
                 // no data found
-                echo "No data found";
+                echo "Пока еще нет данных";
             }
         }
         ?>

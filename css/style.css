@@ -27,18 +27,19 @@
 
 
 h1{
-    color:black;
+    color:white;
     font-size: 2vw;
 }
 
 .h1link{
     color:#90C3D4;
-    font-size: xx-large;
+    font-size: 2vw;
 }
+
 body{
     background-size:  cover;
     background-repeat: no-repeat;
-    /*background: black;*/
+    background: black;
     /*background-image:    url(http://top.prettl.ru/media/bg.jpg);*/
 
 }
@@ -129,9 +130,9 @@ label:hover:before {
 }
 
 table, td{
-    border: 1px solid white;
+    border: 1px solid black;
     border-collapse: collapse;
-    color: white;
+    color: black;
     padding-left: 5px;
     padding-right: 5px;
     padding-bottom: 5px;
@@ -139,25 +140,12 @@ table, td{
     table-layout:fixed;
 
 }
-
-.table_top, .td_top{
-    border: 1px solid white;
-    border-collapse: collapse;
-    color:black;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    table-layout:fixed;
-
-}
-
 
 .top-form{
     width: 95%;
     height: 80%;
     padding: 5px;
-    background:rgba(0,0,0,0.3);
+    background:rgba(255,255,255,0.9);
     border-radius:10px;
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
@@ -167,7 +155,7 @@ table, td{
 .login-form{
     width:95%;
     padding:10px 10px;
-    background:rgba(0,0,0,0.7);
+    background:rgba(255,255,255,0.9);
     border-radius:10px;
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
@@ -176,7 +164,6 @@ table, td{
 
 .p_top_gold, .p_top_silver, .p_top_bronze, .p_top_simple{
     text-align: center;
-    opacity: 0.7;
     border-radius: 5px;
     color: black;
     /*font-size: 48px;*/
@@ -196,21 +183,14 @@ table, td{
 
 }
 
-
-.td_top_outter{
-    border: none;
-    border-collapse: collapse;
-    color:white;
-}
-
 h2{
     color:black;
 }
 p{
-    color:white;
+    color:black;
 }
 label{
-    color:white;
+    color:black;
 }
 
 

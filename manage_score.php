@@ -11,10 +11,10 @@
     <title>Управление баллами</title>
 </head>
 <body>
-<div class="login-form">
-    <h1 align="left"><a href="http://top.prettl.ru/manage_workers.php" class="h1link">Администрирование работников</a></h1>
-    <h1 align="left"><a href="http://top.prettl.ru/manage_score.php" class="h1link">Управление баллами работников</a></h1>
 
+    <h1 align="center"><a href="http://top.prettl.ru/manage_workers.php" class="h1link">Администрирование работников</a></h1>
+    <h1 align="center"><a href="http://top.prettl.ru/manage_score.php" class="h1link">Управление баллами работников</a></h1>
+    <div class="login-form">
     <?php
 
     //if(!isset($_GET['date']) || empty($_GET['date']))$date=date("Y-m-d");
@@ -46,7 +46,8 @@
         //echo '<form method="GET">';
         $sql = "SELECT * FROM workers";
         if ($res = $pdo->query($sql)) {
-            while ($row = $res->fetch()){
+            foreach($pdo->query($sql) as $row){
+            //while ($row = $res->fetch()){
                 $user_id=$row['id'];
                 $sql_select="SELECT * FROM main WHERE user_id='$user_id' and date='$date'";
                 if ($res_select = $pdo->query($sql_select)) {
@@ -69,8 +70,8 @@
                 $new_table=true;
                 echo '<table align="center" border="0">';
                 $count=1;
-                while ($row = $res->fetch()){
-
+                foreach($pdo->query($sql) as $row){
+                //while ($row = $res->fetch()){
                     if($new_table){
                         echo '<td >';
                         echo '<table align="center" class="table_top">';
@@ -126,7 +127,8 @@
             $err=false;
             $sql = "SELECT * FROM workers";
             if ($res = $pdo->query($sql)) {
-                while ($row = $res->fetch()){
+                foreach($pdo->query($sql) as $row){
+                //while ($row = $res->fetch()){
                     //Берем построчно пользователя
                     $user_id=$row['id'];
                     $user_fio=$row['fio'];
