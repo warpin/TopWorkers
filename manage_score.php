@@ -12,8 +12,9 @@
 </head>
 <body>
 
-    <h1 align="center"><a href="http://top.prettl.ru/manage_workers.php" class="h1link">Администрирование работников</a></h1>
-    <h1 align="center"><a href="http://top.prettl.ru/manage_score.php" class="h1link">Управление баллами работников</a></h1>
+    <h1 align="left"><a href="http://top.prettl.ru/manage_workers.php" class="h1link">Администрирование работников</a></h1>
+    <h1 align="left"><a href="http://top.prettl.ru/manage_score.php" class="h1link">Управление баллами работников</a></h1>
+    <h1 align="left"><a href="http://top.prettl.ru/get_score_on_date.php" class="h1link">Просмотр баллов на дату</a></h1>
     <div class="login-form">
     <?php
 

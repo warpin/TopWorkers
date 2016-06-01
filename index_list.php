@@ -10,7 +10,7 @@
     <title>Рейтинг вязальщиков ООО "ПРЕТТЛЬ-НК"</title>
     <meta name="description" content="Рейтинг вязальщиков">
     <link rel="stylesheet" href="./css/style_list.css">
-    <META HTTP-EQUIV="refresh" CONTENT="420">
+    <META HTTP-EQUIV="refresh" CONTENT="420;URL=http://top.prettl.ru/index.php">
 
 </head>
 
@@ -38,7 +38,7 @@
         $sql = "SELECT SUM(main.score),main.date,workers.fio
         FROM main
         LEFT OUTER JOIN workers ON main.user_id=workers.id
-        WHERE MONTH(date) = MONTH(CURRENT_DATE())
+        WHERE MONTH(date) = MONTH(CURRENT_DATE()) and YEAR(date) = YEAR(CURRENT_DATE())
         GROUP BY workers.fio
         ORDER BY SUM(main.score) DESC";
 
@@ -63,7 +63,7 @@
                 echo '</marquee>';
             } else {
                 // no data found
-                echo "No data found";
+                echo "Пока еще нет данных";
             }
 
         }

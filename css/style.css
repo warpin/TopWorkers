@@ -37,8 +37,8 @@ h1{
 }
 
 body{
-    background-size:  cover;
-    background-repeat: no-repeat;
+/*    background-size:  cover;
+    background-repeat: no-repeat;*/
     background: black;
     /*background-image:    url(http://top.prettl.ru/media/bg.jpg);*/
 
@@ -143,7 +143,6 @@ table, td{
 
 .top-form{
     width: 95%;
-    height: 80%;
     padding: 5px;
     background:rgba(255,255,255,0.9);
     border-radius:10px;
@@ -160,6 +159,7 @@ table, td{
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
     margin:20px auto;
+    overflow-x: scroll;
 }
 
 .p_top_gold, .p_top_silver, .p_top_bronze, .p_top_simple{

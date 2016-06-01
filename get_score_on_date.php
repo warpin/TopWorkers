@@ -10,12 +10,19 @@
     <title>Рейтинг вязальщиков ООО "ПРЕТТЛЬ-НК"</title>
     <meta name="description" content="Рейтинг вязальщиков">
     <link rel="stylesheet" href="css/style.css">
-    <META HTTP-EQUIV="refresh" CONTENT="420;URL=http://top.prettl.ru/index_list.php">
+    <META HTTP-EQUIV="refresh" CONTENT="420">
 
 </head>
 
 <body>
+
+<h1 align="left"><a href="http://top.prettl.ru/manage_workers.php" class="h1link">Администрирование работников</a></h1>
+<h1 align="left"><a href="http://top.prettl.ru/manage_score.php" class="h1link">Управление баллами работников</a></h1>
+<h1 align="left"><a href="http://top.prettl.ru/get_score_on_date.php" class="h1link">Просмотр баллов на дату</a></h1>
+
+
 <h1 class="top_h1" align="center">Рейтинг персонала производства жгутов ООО "ПРЕТТЛЬ-НК"</h1>
+
 
 
     <?php
@@ -24,13 +31,32 @@
         $month_array=array("Января","Феварля","Марта","Апреля","Мая","Июня","Июля","Августа","Сентября",
             "Октября","Ноября","Декабря");
         date_default_timezone_set('UTC');
-        $mounth=$month_array[date("n")-1];
-        $day=date("j");
-        $year=date("Y");
+        if(isset($_GET['date']))$date=$_GET['date'];
+        else $date=null;
+
+        if(is_null($date)){
+            $mounth=$month_array[date("n")-1];
+            $day=date("j");
+            $year=date("Y");
+        } else {
+            $mounth=$month_array[date("n",strtotime($date))-1];
+            $day=date("j",strtotime($date));
+            $year=date("Y",strtotime($date));
+        }
         echo '<h1 align="center">на '.$day.' '.$mounth.' '.$year.'</h1>';
     ?>
 
     <div class="top-form">
+        <form method="GET">
+            <label>Выберите дату
+                <input type="date" name="date" required value="<?php echo $date ?>">
+            </label>
+
+            <button name="pick_date" value="true" class="btn">
+                Отобразить баллы
+            </button>
+            <p></p>
+        </form>
         <?php
 
         require './config/db_connect.php';
@@ -39,7 +65,7 @@
         $sql = "SELECT SUM(main.score),main.date,workers.fio
         FROM main
         LEFT OUTER JOIN workers ON main.user_id=workers.id
-        WHERE MONTH(date) = MONTH(CURRENT_DATE()) and YEAR(date) = YEAR(CURRENT_DATE())
+        WHERE MONTH(date) = MONTH('$date') and YEAR(date) = YEAR('$date')
         GROUP BY workers.fio
         ORDER BY SUM(main.score) DESC";
 
