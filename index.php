@@ -10,7 +10,7 @@
     <title>Рейтинг вязальщиков ООО "ПРЕТТЛЬ-НК"</title>
     <meta name="description" content="Рейтинг вязальщиков">
     <link rel="stylesheet" href="css/style.css">
-    <META HTTP-EQUIV="refresh" CONTENT="420;URL=http://top.prettl.ru/index_list.php">
+    <META HTTP-EQUIV="refresh" CONTENT="420">
 
 </head>
 
@@ -111,6 +111,8 @@
             }
         }
         ?>
+        <hr>
+        <p>Разработал: Булатов Р.Р.</p>
 
 </div>
 

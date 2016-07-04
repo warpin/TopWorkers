@@ -49,7 +49,7 @@
                 // check for empty result
                 $class="p_top_gold";
                 $count=1;
-                echo '<marquee behavior="scroll" direction="up" scrollamount="5" height="100%">';
+                echo '<marquee behavior="scroll" direction="up" scrollamount="20" height="100%">';
                 //while ($row = mysql_fetch_array($result)) {
                 //while ($row = $res->fetch()){
                 foreach($pdo->query($sql) as $row){
